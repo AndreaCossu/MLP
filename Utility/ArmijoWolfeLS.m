@@ -1,10 +1,9 @@
 function [ eta , phialpha ] = ArmijoWolfeLS( phi0 , phip0 , nn , X , Y)
 
-%%%%
 %
 % Code adapted from Prof. Antonio Frangioni's implementation @ University of Pisa - Computer Science Department
 %
-%%%%
+%
 
 
 % performs an Armijo-Wolfe Line Search.
