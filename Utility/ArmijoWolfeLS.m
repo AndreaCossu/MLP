@@ -91,16 +91,16 @@ function [ phi , phip ] = f2phi( alpha , nn , X , Y )
     next_gradient = [];
     for i=1:nn.num_hidden+1
         if nn.cg_flag == 1 % conjugate gradient
-            curr_dir = vertcat(curr_dir,nn.current_cg_dir{i}(:)); %prendo la direzione attuale
-            nn.weights{i,1} = nn.weights{i,1} + (alpha .* nn.current_cg_dir{i,1}); % faccio un passo in direzione della direzione attuale
+            curr_dir = vertcat(curr_dir,nn.current_cg_dir{i}(:)); %take current direction
+            nn.weights{i,1} = nn.weights{i,1} + (alpha .* nn.current_cg_dir{i,1}); % make a step in the current direction
         elseif nn.cg_flag == 0 % gradient descent
-            curr_dir = vertcat(curr_dir,-nn.grads{i}(:)); %prendo la direzione attuale
-            nn.weights{i,1} = nn.weights{i,1} - (alpha .* nn.grads{i,1}); % faccio un passo in direzione della direzione attuale
+            curr_dir = vertcat(curr_dir,-nn.grads{i}(:)); 
+            nn.weights{i,1} = nn.weights{i,1} - (alpha .* nn.grads{i,1});
         else
             error('In f2phi: wrong algorithm parameter.');
         end
     end
-    % e calcolo errore della nn per questi nuovi pesi e relativa derivata
+    % compute error and gradient for new weights
     [~, ~, phi] = nn.FP(X, Y);
     nn.BP(X,Y); 
     for i=1:nn.num_hidden+1
